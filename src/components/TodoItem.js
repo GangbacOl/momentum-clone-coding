@@ -1,50 +1,45 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import TodoContext from '../contexts/TodoContext';
+import TodoItemLeft from './TodoItemLeft';
+import TodoItemRight from './TodoItemRight';
 
-const TodoItemWrapper = styled.div`
-    border: 1px solid black;
-    padding: 10px;
-    margin: 10px;
+const TodoItemWrapper = styled.li`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px;
+    margin: 3px auto;
+    color: white;
+    width: 90%;
+    font-size: 0.8rem;
 `;
 
-const TodoItem = ({ item, idx }) => {
-    const [updateInputText, setUpdateInputText] = useState('');
-    const [updateForm, setUpdateForm] = useState(false);
-    const value = useContext(TodoContext);
-
-    document.body.addEventListener('click', () => setUpdateForm(false));
+const TodoItem = ({ item, idx, deleteList }) => {
+    const [showModal, setShowModal] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
+    const [showUpdateForm, setShowUpdateForm] = useState(false);
 
     return (
         <TodoItemWrapper>
-            <div className="listItem" key={idx}>
-                <span>{item}</span>
-                {updateForm ? (
-                    <div>
-                        <input
-                            type="text"
-                            onChange={(e) => setUpdateInputText(e.target.value)}
-                            value={updateInputText}
-                        />
-                        <input
-                            type="button"
-                            onClick={() => {
-                                value.actions.updateList(updateInputText, idx);
-                                setUpdateInputText('');
-                                setUpdateForm(false);
-                            }}
-                            value="수정"
-                        />
-                    </div>
-                ) : (
-                    <div>
-                        <input type="button" onClick={() => value.actions.deleteList(idx)} value="삭제" />
-                        <input type="button" onClick={() => setUpdateForm(true)} value="수정" />
-                    </div>
-                )}
-            </div>
+            <TodoItemLeft
+                item={item}
+                idx={idx}
+                setShowModal={setShowModal}
+                showUpdateForm={showUpdateForm}
+                setShowUpdateForm={setShowUpdateForm}
+                isChecked={isChecked}
+                setIsChecked={setIsChecked}
+            />
+            <TodoItemRight
+                idx={idx}
+                isChecked={isChecked}
+                deleteList={deleteList}
+                showModal={showModal}
+                setShowModal={setShowModal}
+                setShowUpdateForm={setShowUpdateForm}
+            />
         </TodoItemWrapper>
     );
 };
 
-export default TodoItem;
+export default React.memo(TodoItem);
