@@ -1,7 +1,7 @@
 import React, { useState, useCallback, createContext } from 'react';
 
 const TodoContext = createContext({
-    state: { list: ['리액트 공부하기', '밥 먹기', '운동하기'] },
+    state: { list: ['ex) Study math'] },
     actions: {
         createList: () => {},
         updateList: () => {},
@@ -10,7 +10,7 @@ const TodoContext = createContext({
 });
 
 const TodoProvider = ({ children }) => {
-    const [list, setList] = useState(['리액트 공부하기', '밥 먹기', '운동하기']);
+    const [list, setList] = useState(['ex) Study math']);
     const createList = useCallback((todoContent) => setList(list.concat(todoContent)), [list]);
     const deleteList = useCallback((idx) => setList(list.filter((item, index) => index !== idx)), [list]);
     const updateList = useCallback(
