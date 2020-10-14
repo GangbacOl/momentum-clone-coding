@@ -1,11 +1,32 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
+
+const FirstWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+const PWrapper = styled.p`
+    text-align: center;
+    font-size: 3rem;
+    font-weight: bold;
+`;
+
+const InputWrapper = styled.input`
+    all: unset;
+    border-bottom: 3px solid white;
+    width: 90%;
+    text-align: center;
+    font-size: 2rem;
+`;
 
 const First = () => {
     const [username, setUsername] = useState(null);
     return (
-        <div>
-            <h2>이름을 입력해주세요.</h2>
-            <input
+        <FirstWrapper>
+            <PWrapper>이름을 입력해주세요.</PWrapper>
+            <InputWrapper
                 type="text"
                 onChange={(e) => {
                     setUsername(e.target.value);
@@ -18,7 +39,7 @@ const First = () => {
                     }
                 }}
             />
-        </div>
+        </FirstWrapper>
     );
 };
 
